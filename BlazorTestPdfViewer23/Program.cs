@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor().AddHubOptions(o => { o.MaximumReceiveMessageSize = 102400000; });
 // Add Syncfusion Blazor service to the container.
-Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("todo");
+Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("");
 builder.Services.AddSyncfusionBlazor();
 
 var app = builder.Build();
