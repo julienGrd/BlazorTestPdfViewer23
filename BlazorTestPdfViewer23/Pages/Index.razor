@@ -9,9 +9,13 @@
 </SfPdfViewerServer>
 
 <button @onclick="@InsertSign">Insert custom stamp</button>
+<button @onclick="@TestDocumentUpdated">Test document Updated</button>
 @code {
     public List<PdfViewerCustomStamp> pdfViewerCustomStamps { get; set; }
-    private string DocumentPath { get; set; } = "wwwroot/Cerfa.pdf";
+    private string DocumentPath { get; set; } = "wwwroot/ma piece a signer (3) interv.pdf";
+
+    [Inject]
+    public IJSRuntime JsRuntime { get; set; }
 
     SfPdfViewerServer viewerServer;
 
@@ -29,15 +33,27 @@
                 };
     }
 
+    public void TestDocumentUpdated()
+    {
+        if (viewerServer.IsDocumentEdited)
+        {
+            this.JsRuntime.InvokeVoidAsync("window.alert", "The document is updated");
+        }
+        else
+        {
+            this.JsRuntime.InvokeVoidAsync("window.alert", "The document is not updated");
+        }
+    }
+
     private async Task DocumentLoaded(LoadEventArgs args)
     {
-        List<FormField> lformFields = await viewerServer.RetrieveFormFieldsAsync();
+        // List<FormField> lformFields = await viewerServer.RetrieveFormFieldsAsync();
 
-        foreach (var lItem in lformFields)
-        {
-            lItem.IsReadOnly = true;
+        // foreach (var lItem in lformFields)
+        // {
+        //     lItem.IsReadOnly = true;
 
-            await viewerServer.UpdateFormFieldsAsync(lItem);
-        }
+        //     await viewerServer.UpdateFormFieldsAsync(lItem);
+        // }
     }
 }
